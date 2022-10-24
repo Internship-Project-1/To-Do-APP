@@ -24,7 +24,7 @@ class TodoController {
     }
 
     static async view(req, res) {
-        try{
+        try {
             const userId = req.params.userId;
 
             if (!userId && userId === "") {
@@ -32,14 +32,14 @@ class TodoController {
                     status: "Validation Error",
                     message: "Enter Proper userId",
                 });
-            } else{
+            } else {
                 const collections = await Task.find({ userId: userId });
                 return Afterware.sendResponse(req, res, 200, {
                     status: "success",
                     data: collections,
                 });
             }
-        }catch(error){
+        } catch (error) {
             console.log(error);
             return Afterware.sendResponse(req, res, 500, {
                 status: "error",
@@ -57,11 +57,35 @@ class TodoController {
                     status: "Validation Error",
                     message: "Enter Proper taskId",
                 });
-            }else{
+            } else {
                 const updated = await Task.updateOne({ _id: taskId }, req.body);
                 return Afterware.sendResponse(req, res, 200, {
                     status: "success",
                     message: `${updated.modifiedCount} Documents modified`,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            return Afterware.sendResponse(req, res, 500, {
+                status: "error",
+                message: "Internal Server Error",
+            });
+        }
+    }
+
+    static async delete(req, res) {
+        try {
+            userId = req.params.userId;
+            if (!userId && userId === "") {
+                return Afterware.sendResponse(req, res, 400, {
+                    status: "Validation Error",
+                    message: "Enter Proper userId",
+                });
+            } else {
+                const deleted = await Task.deleteMany({ userId: userId, isCompleted: true });
+                return Afterware.sendResponse(req, res, 200, {
+                    status: "success",
+                    message: `${deleted.deletedCount} Documents deleted`,
                 });
             }
         } catch (error) {
