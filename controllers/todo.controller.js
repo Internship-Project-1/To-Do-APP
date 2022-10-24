@@ -1,5 +1,5 @@
 const Afterware = require("../lib/afterware");
-const Task = require("../models/todo");
+const Task = require("../models/Task");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -75,7 +75,7 @@ class TodoController {
 
     static async deleteAll(req, res) {
         try {
-            userId = req.params.userId;
+            const userId = req.params.userId;
             if (!userId && userId === "") {
                 return Afterware.sendResponse(req, res, 400, {
                     status: "Validation Error",
@@ -99,7 +99,7 @@ class TodoController {
 
     static async delete(req, res) {
         try {
-            taskId = req.params.taskId;
+            const taskId = req.params.taskId;
             if (!taskId && taskId === "") {
                 return Afterware.sendResponse(req, res, 400, {
                     status: "Validation Error",
