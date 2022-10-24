@@ -41,21 +41,22 @@ curl --location --request GET 'http://localhost:3000/api/todo/view/:userId' \
 --header 'Content-Type: application/json' \
 ```
 ### I can complete a task(update a todo with a specific id)
+```
 curl --location --request PUT 'http://localhost:3000/api/todo/update/:taskId' \
 --header 'Authorization: Bearer AuthToken' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "isCompleted": true,
 }'
-### I can remove all tasks under the Completed tab
+```
 
+### I can remove all tasks under the Completed tab
 ```
 curl --location --request DELETE 'http://localhost:3000/api/todo/delete/:userId' \
 --header 'Authorization: Bearer AuthToken' \
 --header 'Content-Type: application/json' \
 ```
 ### I can remove one task under the Completed tab
-
 ```
 curl --location --request DELETE 'http://localhost:3000/api/todo/deleteTask/:taskId' \
 --header 'Authorization: Bearer AuthToken' \
@@ -63,7 +64,7 @@ curl --location --request DELETE 'http://localhost:3000/api/todo/deleteTask/:tas
 ```
 
 
-
+### user related curls(Assignment 1)
 ```
 curl --location --request POST 'http://localhost:3000/api/user/create' \
 --header 'Content-Type: application/json' \
