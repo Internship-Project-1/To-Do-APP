@@ -73,7 +73,7 @@ class TodoController {
         }
     }
 
-    static async delete(req, res) {
+    static async deleteAll(req, res) {
         try {
             userId = req.params.userId;
             if (!userId && userId === "") {
@@ -83,6 +83,30 @@ class TodoController {
                 });
             } else {
                 const deleted = await Task.deleteMany({ userId: userId, isCompleted: true });
+                return Afterware.sendResponse(req, res, 200, {
+                    status: "success",
+                    message: `${deleted.deletedCount} Documents deleted`,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            return Afterware.sendResponse(req, res, 500, {
+                status: "error",
+                message: "Internal Server Error",
+            });
+        }
+    }
+
+    static async delete(req, res) {
+        try {
+            taskId = req.params.taskId;
+            if (!taskId && taskId === "") {
+                return Afterware.sendResponse(req, res, 400, {
+                    status: "Validation Error",
+                    message: "Enter Proper userId",
+                });
+            } else {
+                const deleted = await Task.deleteMany({ _id: taskId, isCompleted: true });
                 return Afterware.sendResponse(req, res, 200, {
                     status: "success",
                     message: `${deleted.deletedCount} Documents deleted`,
