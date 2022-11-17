@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express')
+const bodyParser = require('body-parser')
 const colors = require('colors')
 const dotenv = require('dotenv').config()
 const {errorHandler} = require('./middleware/errorMiddleware')
@@ -10,12 +11,13 @@ connectDB()
 
 const app = express()
 
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.use('/api/todos', require('./routes/todoRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/images', require('./routes/imageRoutes'))
+app.use('/static', express.static(path.join(__dirname)))
 
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
